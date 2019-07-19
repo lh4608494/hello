@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.mapper.ItemMapper">
+
+
+    <!--    //1. 查询商品的总条数-->
+    <!--    Long findCountByName(@Param("name")String name);-->
+    <select id="findCountByName" resultType="Long">
+        select count(1) from item
+        <where>
+            <if test="name != null and name != ''">
+                name like "%"#{name}"%"
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <!--    //2. 分页查询商品的具体信息-->
+    <!--    List<Item> findItemByNameLikeAndLimit(@Param("name")String name,-->
+    <!--                                            @Param("offset")String offset,-->
+    <!--                                            @Param("size")String size);-->
+    <select id="findItemByNameLikeAndLimit" resultType="Item">
+        select * from item
+        <where>
+            <if test="name != null and name != ''">
+                name like "%"#{name}"%"
+            </if>
+        </where>
+        order by created desc
+        limit #{offset},#{size}
+    </select>
+    <!--添加商品-->
+    <!--Integer save(Item item);-->
+    <insert id="save" parameterType="Item">
+        insert into
+            item
+        (name,price,production_date,description,pic)
+            values
+        (#{name},#{price},#{productionDate},#{description},#{pic})
+    </insert>
+</mapper>
