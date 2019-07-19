@@ -98,6 +98,7 @@ public class ItemController {
             redirectAttributes.addAttribute("addInfo","图片类型不正确,要求" + picType);
             return REDIRECT + ITEM_ADD_UI;
         }
+        System.out.println("============");
         // 3. 校验图片是否损坏.
         BufferedImage image = ImageIO.read(picFile.getInputStream());
         if(image == null){
